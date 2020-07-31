@@ -96,7 +96,7 @@ const updateColleges = async (
       response.status = 201,
         response.body = {
           success: true,
-          data: college,
+          msg : "College Updated 😊",
         };
     } catch (err) {
       response.status = 500,
