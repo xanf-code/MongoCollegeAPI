@@ -1,5 +1,5 @@
 import { Application, Router} from "https://deno.land/x/oak/mod.ts"
-import { getColleges, createColleges , getSingleCollege} from './routes.ts'
+import { getColleges, createColleges , getSingleCollege , deleteColleges} from './routes.ts'
 
 const router = new Router()
 
@@ -11,7 +11,7 @@ router
     .get('/api/v1/colleges/:id', getSingleCollege)
     .post('/api/v1/colleges', createColleges)
     // .put('/api/v1/colleges/:id', updateColleges)
-    // .delete('/api/v1/colleges/:id', deleteColleges)
+    .delete('/api/v1/colleges/:id', deleteColleges)
 
 const app = new Application()
 

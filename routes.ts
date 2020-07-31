@@ -68,4 +68,22 @@ const createColleges = async (
   }
 };
 
-export { getColleges, createColleges, getSingleCollege };
+const deleteColleges = async (ctx: RouterContext) => {
+  const id = ctx.params.id;
+  try {
+    const college = await collegesCollection.deleteOne({ _id: { $oid: id } });
+    ctx.response.status = 201,
+      ctx.response.body = {
+        success: true,
+        msg : "College Deleted 😊",
+      };
+  } catch (err) {
+    ctx.response.status = 500,
+      ctx.response.body = {
+        success: false,
+        data: err.toString(),
+      };
+  }
+};
+
+export { getColleges, createColleges, getSingleCollege, deleteColleges };
