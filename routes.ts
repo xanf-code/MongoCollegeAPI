@@ -20,6 +20,24 @@ const getColleges = async ({ response }: { response: any }) => {
   }
 };
 
+const getSingleCollege = async ( ctx: RouterContext) => {
+    const id = ctx.params.id;
+  try {
+    const college = await collegesCollection.findOne({_id : {$oid : id}});
+    ctx.response.status = 201,
+      ctx.response.body = {
+        success: true,
+        data: college,
+      };
+  } catch (err) {
+    ctx.response.status = 500,
+      ctx.response.body = {
+        success: false,
+        data: err.toString(),
+      };
+  }
+};
+
 const createColleges = async (
   { request, response }: { request: any; response: any },
 ) => {
@@ -34,6 +52,7 @@ const createColleges = async (
   } else {
     try {
       const id = await collegesCollection.insertOne(college);
+      college._id = id;
       response.status = 201,
         response.body = {
           success: true,
@@ -49,4 +68,4 @@ const createColleges = async (
   }
 };
 
-export { getColleges, createColleges };
+export { getColleges, createColleges, getSingleCollege };
