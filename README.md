@@ -10,7 +10,7 @@ CheckList:
 
 ```
 # This project uses Denon
-deno start
+denon start
 ```
 
 ## Working
