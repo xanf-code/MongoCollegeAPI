@@ -68,6 +68,46 @@ const createColleges = async (
   }
 };
 
+const updateColleges = async (
+  { params, request, response }: {
+    params: { id: string };
+    request: any;
+    response: any;
+  },
+) => {
+  const body = await request.body();
+  const colleges = await body.value;
+
+  if (!request.hasBody) {
+    response.status = 400,
+      response.body = {
+        success: false,
+        msg: "No Data",
+      };
+  } else {
+    try {
+        const college = await collegesCollection.updateOne({_id : {$oid: params.id}}, {
+            $set : {
+                name : colleges.name,
+                type : colleges.type
+            }
+        });
+        
+      response.status = 201,
+        response.body = {
+          success: true,
+          data: college,
+        };
+    } catch (err) {
+      response.status = 500,
+        response.body = {
+          success: false,
+          msg: err.toString(),
+        };
+    } 
+  }
+};
+
 const deleteColleges = async (ctx: RouterContext) => {
   const id = ctx.params.id;
   try {
@@ -86,4 +126,4 @@ const deleteColleges = async (ctx: RouterContext) => {
   }
 };
 
-export { getColleges, createColleges, getSingleCollege, deleteColleges };
+export { getColleges, createColleges, getSingleCollege, deleteColleges, updateColleges};
